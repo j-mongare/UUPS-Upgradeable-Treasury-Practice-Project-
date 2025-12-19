@@ -10,13 +10,13 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 contract TreasuryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
 
     //========Storage=============
-    //@notice storage vars are merely described here to help with compliation
+    //@notice storage vars are merely described here to help with compiliation
     // the proxy holds the storage
  
     uint256 public totalAssets; // total ETH collected
     address public withdrawalAddr; // address where withdrawals are sent
   
-    //@notice storage gap for appending variables in the future
+    //@notice storage gap for appending new variables in the future
     uint256[48]private __gap;
 
     event Deposited(address indexed user, uint256 amount);
@@ -48,12 +48,16 @@ contract TreasuryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
 
     }
     function withdraw (uint256 amount) external virtual {
-        // @notice use CEI pattern to avoid reentracy/recursive call
+        // @notice use of CEI pattern to avoid reentrancy/recursive calls
+
+             // checks
         require (msg.sender == owner(), " Not Owner");
         require (amount <= totalAssets, " Insufficient Funds");
 
+           // effects
         totalAssets -= amount;
 
+          // Interactions
        (bool ok, ) = withdrawalAddr.call {value:amount}("");
        require (ok, " Transaction failed");
 
@@ -64,6 +68,7 @@ contract TreasuryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner{}
 
     
+
 
 
 }
