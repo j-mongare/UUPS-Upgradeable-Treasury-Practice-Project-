@@ -28,7 +28,7 @@ How to safely evolve logic across versions without corrupting storage
 
 Common upgradeable-contract pitfalls and how to avoid them
 
- Architecture
+** Architecture
 Users
   ↓
 ERC1967Proxy (DeployTreasury)
@@ -53,95 +53,95 @@ This contract deploys an OpenZeppelin ERC1967Proxy, which acts as the permanent 
 
 Responsibilities:
 
-Deploy a UUPS-compatible proxy
+*Deploy a UUPS-compatible proxy
 
-Point the proxy to the initial implementation (TreasuryV1)
+*Point the proxy to the initial implementation (TreasuryV1)
 
-Call initialize() on deployment via delegatecall
+*Call initialize() on deployment via delegatecall
 
-Ensure initialization happens exactly once
+*Ensure initialization happens exactly once
 
 Key notes:
 
-The proxy holds all storage
+*The proxy holds all storage
 
-The proxy contains no business logic
+*The proxy contains no business logic
 
-Users interact with the proxy address using the TreasuryV1 ABI
+*Users interact with the proxy address using the TreasuryV1 ABI
 
-TreasuryV1.sol
+1 . TreasuryV1.sol
 
 Initial implementation (base version)
 
 Responsibilities:
 
-Accept ETH deposits
+*Accepts ETH deposits
 
-Track total ETH held by the treasury
+*Tracks total ETH held by the treasury
 
-Allow the owner (DAO) to withdraw ETH
+*Allows the owner (DAO) to withdraw ETH
 
-Define the base storage layout
+*Defines the base storage layout
 
-Enable UUPS upgrades via _authorizeUpgrade
+*Enables UUPS upgrades via _authorizeUpgrade
 
-Key concepts:
+!! Key concepts:
 
-Uses initializer instead of a constructor
+*Uses initializer instead of a constructor
 
-Explicit ownership initialization (OpenZeppelin v5 style)
+*Explicit ownership initialization (OpenZeppelin v5 style)
 
-Storage layout must never be reordered
+*Storage layout must never be reordered
 
-Optional storage gap reserved for future upgrades
+*Optional storage gap reserved for future upgrades
 
-TreasuryV2.sol
+2. TreasuryV2.sol
 
 First upgrade — adds emergency pause functionality
 
 Responsibilities:
 
-Introduce a paused state
+*Introduce a paused state
 
-Allow the owner to pause and unpause withdrawals
+*Allow the owner to pause and unpause withdrawals
 
-Prevent withdrawals while paused
+*Prevent withdrawals while paused
 
-Preserve all security and accounting rules from V1
+*Preserve all security and accounting rules from V1
 
-Key concepts:
+!! Key concepts:
 
-Safe storage gap consumption
+*Safe storage gap consumption
 
-reinitializer(2) for new state
+*reinitializer(2) for new state
 
-Guard-style modifiers (no state mutation)
+*Guard-style modifiers (no state mutation)
 
-Functions marked virtual for future upgrades
+*Functions marked virtual for future upgrades
 
-TreasuryV3.sol
+3. TreasuryV3.sol
 
 Second upgrade — adds withdrawal fees
 
 Responsibilities:
 
-Introduce a configurable withdrawal fee
+*Introduces a configurable withdrawal fee
 
-Retain fees inside the treasury
+*Retains fees inside the treasury
 
-Allow the owner to update the fee
+*Allows the owner to update the fee
 
-Preserve accounting correctness across upgrades
+*Preserves accounting correctness across upgrades
 
-Key concepts:
+!! Key concepts:
 
-Fees stored as basis points (bps) instead of percentages
+*Fees stored as basis points (bps) instead of percentages
 
-Separation of configuration state from runtime calculations
+*Separation of configuration state from runtime calculations
 
-Layered upgrade logic (V1 → V2 → V3)
+*Layered upgrade logic (V1 → V2 → V3)
 
-Continued safe storage gap consumption
+*Continued safe storage gap consumption
 
 🔐 Upgrade Pattern Used
 
@@ -189,13 +189,8 @@ Failure and edge-case scenarios
 
 This repository is intended for:
 
-Developers learning UUPS upgradeable contracts
-
-Engineers practicing storage layout safety
-
-Students preparing for Solidity interviews or audits
-
-Anyone moving beyond basic proxy tutorials
+*Developers learning UUPS upgradeable contracts
+*Lawyers learning solidity...lol
 
 ⚠️ Disclaimer
 
