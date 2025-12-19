@@ -4,7 +4,7 @@ pragma solidity ^0.8.23;
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 import "./TreasuryV1.sol";
 
-//@title DeployTreasur 
+//@title DeployTreasury.......sets TreasuryV1.sol as implementation 
 //@ notice this is the proxy contract, where storage lives and the interface users use to access its logic contracts
 
 contract DeployTreasury {
@@ -18,3 +18,4 @@ contract DeployTreasury {
         // users interact with proxy address = TreasuryV1 abi
     }
 }
+
