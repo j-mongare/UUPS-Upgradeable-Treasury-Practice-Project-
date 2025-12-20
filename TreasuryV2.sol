@@ -36,7 +36,7 @@ contract TreasuryV2 is TreasuryV1{
     }
     
     
-    //@DEV Updated withdrawal logic
+    //@DEV Updated withdrawal logic to include pausing logic
 
     function withdraw (uint256 amount ) external virtual override whenNotPaused onlyOwner{
         
@@ -55,3 +55,4 @@ contract TreasuryV2 is TreasuryV1{
 
 
     }
+
