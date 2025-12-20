@@ -9,9 +9,13 @@ import "./TreasuryV1.sol";
 // under the hood, th proxy utilizes delegatecall to access implementation logic
 
 contract DeployTreasury {
+
+ERC1967Proxy public proxy;
+
     constructor (address implementation){
+       
         bytes memory data = abi.encodeWithSignature("initialize()");
-        new ERC1967Proxy (implementation, data);
+       proxy = new ERC1967Proxy (address(implementation), data);
 
         // proxy is deployed
         // initialize() runs once
@@ -19,6 +23,7 @@ contract DeployTreasury {
         // users interact with proxy address + TreasuryV1 abi
     }
 }
+
 
 
 
