@@ -6,6 +6,7 @@ import "./TreasuryV1.sol";
 
 //@title DeployTreasury.......sets TreasuryV1.sol as implementation 
 //@ notice this is the proxy contract, where storage lives and the interface users use to access its logic contracts
+// under the hood, th proxy utilizes delegatecall to access implementation logic
 
 contract DeployTreasury {
     constructor (address implementation){
@@ -18,5 +19,6 @@ contract DeployTreasury {
         // users interact with proxy address + TreasuryV1 abi
     }
 }
+
 
 
