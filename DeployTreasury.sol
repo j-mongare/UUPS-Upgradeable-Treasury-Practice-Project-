@@ -15,7 +15,8 @@ contract DeployTreasury {
         // proxy is deployed
         // initialize() runs once
         // proxy now points to TreasuryV1.sol
-        // users interact with proxy address = TreasuryV1 abi
+        // users interact with proxy address + TreasuryV1 abi
     }
 }
+
 
