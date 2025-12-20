@@ -21,13 +21,14 @@ contract TreasuryV3 is TreasuryV2{
         feeBps = 1_000; // 10%
     }
     //===========Updated Logic===============
+    //@notice withdrawal logic now includes fees, which remains in the treasury, a % of amount withdrawn
 
     function withdraw(uint256 amount) external onlyOwner  override whenNotPaused{
         require (amount > 0, " Zero Amount");
         require (amount <= totalAssets, "Insufficient Funds");
 
-        uint256 fee= (feeBps * amount)/1_000;
-        uint256 payout = amount - fee;
+        uint256 fee= (feeBps * amount)/1_000; // a 10% fee is levied on withdrawals
+        uint256 payout = amount - fee; // amount transferred to the caller
 
         totalAssets -= amount;
         (bool ok,) = withdrawalAddr.call{value: payout}("");
@@ -40,4 +41,5 @@ contract TreasuryV3 is TreasuryV2{
         require (_newFeeBps <= 2_000, " Fee Too High"); // 20% max
         feeBps= _newFeeBps;
     }
+
 }
