@@ -47,7 +47,7 @@ contract TreasuryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
         emit Deposited(msg.sender, msg.value);
 
     }
-    function withdraw (uint256 amount) external virtual {
+    function withdraw (uint256 amount) external onlyOwner virtual {
         // @notice use of CEI pattern to avoid reentrancy/recursive calls
 
              // checks
@@ -72,3 +72,4 @@ contract TreasuryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
 
 
 }
+
