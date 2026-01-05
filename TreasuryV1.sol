@@ -22,8 +22,7 @@ contract TreasuryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
     event Deposited(address indexed user, uint256 amount);
     event Withdrawn( address indexed user, uint256 amount);
 
-    //@custom: OZ-upgrades-unsafe-allow constructor
-    constructor() initializer{}
+   constructor (){ _disableInitializers();}
 
     //@dev initializers repalce constructors in upgradeable contract patterns
 
@@ -72,4 +71,5 @@ contract TreasuryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
 
 
 }
+
 
