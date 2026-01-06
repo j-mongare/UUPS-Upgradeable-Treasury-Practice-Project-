@@ -22,9 +22,13 @@ contract TreasuryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
     event Deposited(address indexed user, uint256 amount);
     event Withdrawn( address indexed user, uint256 amount);
 
+    //@notice this permanently bricks the logic SC
+    // IT sets _initialized = max(uint64)
+    // this ensures the logic contract becomes unusable forever
+
    constructor (){ _disableInitializers();}
 
-    //@dev initializers repalce constructors in upgradeable contract patterns
+    //@dev initializers replace constructors in upgradeable contract patterns
 
     function initialize(address _owner, address _withdrawalAddr ) public initializer{
 
@@ -71,5 +75,6 @@ contract TreasuryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
 
 
 }
+
 
 
